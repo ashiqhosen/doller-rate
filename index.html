@@ -1,197 +1,309 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fiverr Income Calculation</title>
+    <title>Income Calculator</title>
     <style>
-        body{
-            background: #f8efff;
-            font-family: poppins, sans-serif;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Poppins', 'SolaimanLipi', 'Arial', sans-serif;
+            background: linear-gradient(135deg, #f8efff 0%, #e6d4f7 100%);
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+        }
+        h1 {
+            color: #7e22ce;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+        }
+        .description {
+            color: #6b7280;
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+            align-items: flex-start;
         }
         form {
-            display: block;
-            width: 400px;
+            flex: 1;
+            min-width: 400px;
+            max-width: 500px;
             background: #fff;
-            padding: 20px;
-            border: 1px solid #999;
-            border-radius: 10px;
-            box-shadow: 0px 10px 10px #99999959;
-            
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            border: 1px solid #d9c5f2;
         }
-        .result{
-            
-            display: block;
-            width: 600px;
+        .result {
+            flex: 1;
+            min-width: 400px;
+            max-width: 600px;
             background: #fff;
-            padding: 40px;
-            border: 1px solid #999;
-            border-radius: 10px;
-            box-shadow: 0px 10px 10px #99999959;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            border: 1px solid #d9c5f2;
+        }
+        .form-group {
+            margin-bottom: 20px;
         }
         label {
             display: block;
             font-size: 16px;
             color: #555;
-            margin-bottom: 5px !important;
-            margin-top: 10px;
+            margin-bottom: 8px;
+            font-weight: 500;
         }
         input[type="number"] {
-            display: block;
-            padding: 5px;
-            width: 97%;
-            background: #fff;
-            outline: none !important;
-            border: 1px solid #999;
-            border-radius: 5px;
-            color: #000;
-            font-size: 20px;
-            line-height: 1.3em;
-        }
-        input[type="submit"] {
-            background: #f8efff;
-            color: #000;
+            width: 100%;
+            padding: 12px 15px;
+            background: #faf7ff;
             outline: none;
-            margin: 10px 0px;
-            padding: 10px 30px;
-            border: 1px solid #999;
-            border-radius: 5px;
-            font-size: 16px;
-            font-weight: 600;
-            width: 100%;
-        }
-        input[type="submit"]:hover {
-            background: #e0c0f8ff;
+            border: 2px solid #d9c5f2;
+            border-radius: 8px;
             color: #000;
-            border: 1px dashed #999;
+            font-size: 18px;
+            transition: all 0.3s ease;
         }
-        table {
-            border-collapse: collapse;
-            width: 100%;
-            
+        input[type="number"]:focus {
+            border-color: #7e22ce;
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(126, 34, 206, 0.2);
         }
-
-        th, td {
-            border: 1px solid black;
-            padding: 8px;
-            text-align: left;
-            
-        }
-
-        th {
-            background-color: #f2f2f2;
-        }
-        .wrapper {
+        .input-group {
             display: flex;
             align-items: center;
-            justify-content: space-around;
-            gap: 20px;
-            width: 100% !important;
-            margin: 40px auto;
-            
+        }
+        .input-group input {
+            flex: 1;
+        }
+        .input-group span {
+            background: #7e22ce;
+            color: white;
+            padding: 12px 15px;
+            border-radius: 0 8px 8px 0;
+            font-weight: 500;
+        }
+        button {
+            background: linear-gradient(to right, #7e22ce, #a855f7);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            width: 100%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+        button:hover {
+            background: linear-gradient(to right, #6b21a8, #9333ea);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(126, 34, 206, 0.3);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        th {
+            background-color: #f9fafb;
+            font-weight: 600;
+            color: #4b5563;
+        }
+        tr:last-child td {
+            border-bottom: none;
+        }
+        .highlight {
+            background-color: #f3e8ff !important;
+            font-weight: 600;
+            color: #7e22ce;
+        }
+        .total-row {
+            background-color: #dcfce7 !important;
+            font-weight: 700;
+            color: #166534;
+        }
+        sup {
+            color: #7e22ce;
+            font-size: 0.8em;
         }
         .hidden {
             display: none;
         }
+        .features {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            margin-top: 40px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .features h2 {
+            color: #7e22ce;
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        .feature-card {
+            background: #faf7ff;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #7e22ce;
+        }
+        .feature-card h3 {
+            color: #7e22ce;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+        @media (max-width: 900px) {
+            .wrapper {
+                flex-direction: column;
+                align-items: center;
+            }
+            form, .result {
+                min-width: 100%;
+            }
+            h1 {
+                font-size: 2rem;
+            }
+        }
     </style>
 </head>
 <body>
-<div class="wrapper">
-    <form id="calculationForm">
-        <label for="total_amount">Original Order Price (USD)</label>
-        <input type="number" name="original_price" id="original_price">
-        <label for="dollar_rate">Current USD rate (TK)</label>
-        <input type="number" name="doller_rate" id="doller_rate" value="123">
-
-        <label for="freelancer_budget">Freelancer Payment</label>
-        <input type="number" name="freelancer_payment_price" id="freelancer_payment_price">
-        <input type="submit" value="Calculate">
-    </form>
-    
-    <div class="result hidden" id="resultContainer">
-        <table>
-            <thead>
-                <th>Name</th>
-                <th>Count</th>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>
-                        Original Price
-                    </td>
-                    <td id="originalPriceCell">
-                        $0
-                    </td>
-                </tr>
+    <div class="container">
+        <header>
+            <h1>Income Calculator</h1>
+            <p class="description">Calculate the net income from your freelance work.</p>
+        </header>
+        
+        <div class="wrapper">
+            <form id="calculationForm">
+                <div class="form-group">
+                    <label for="original_price">অর্ডার মূল্য (USD/EURO/AUD)</label>
+                    <input type="number" id="original_price" placeholder="উদাহরণ: 100" min="0" step="0.01" required>
+                </div>
                 
-                <tr>
-                    <td>
-                        Fiverr Percentage
-                    </td>
-                    <td id="fiverrPercentageCell">
-                        ($0) <sup>20%</sup>
-                    </td>
-                </tr>
+                <div class="form-group">
+                    <label for="doller_rate">রেট (BDT)</label>
+                    <input type="number" id="doller_rate" value="123" min="1" step="0.01" required>
+                </div>
                 
-                <tr style="background:#00ffa4 !important;">
-                    <td style="font-weight:600;">
-                        Total Doller
-                    </td>
-                    <td id="totalDollarCell">
-                        ($0 x 0 TK) = 0 TK
-                    </td>
-                </tr>
+                <div class="form-group">
+                    <label for="fiverr_percentage">কমিশন (%)</label>
+                    <div class="input-group">
+                        <input type="number" id="fiverr_percentage" value="20" min="0" max="100" step="0.1" required>
+                        <span>%</span>
+                    </div>
+                </div>
                 
-                <tr>
-                    <td>
-                        Freelancer Payment
-                    </td>
-                    <td id="freelancerPaymentCell">
-                        0 TK
-                    </td>
-                </tr>
-
-                <tr style="background:#00ffa4 !important; font-weight:600">
-                    <td>
-                        My Calculated Money
-                    </td>
-                    <td id="myCalculatedMoneyCell">
-                        0 TK
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+                <div class="form-group">
+                    <label for="freelancer_payment_price">ফ্রিল্যান্সার পেমেন্ট (BDT)</label>
+                    <input type="number" value="0" id="freelancer_payment_price" placeholder="উদাহরণ: 5000" min="0" step="0.01" required>
+                </div>
+                
+                <button type="submit">ক্যালকুলেট করুন</button>
+            </form>
+            
+            <div class="result" id="resultContainer">
+                <h2 style="color: #7e22ce; margin-bottom: 20px; text-align: center;">আপনার আয়ের হিসাব</h2>
+                <table>
+                    <tr>
+                        <th>বিবরণ</th>
+                        <th>পরিমাণ</th>
+                    </tr>
+                    <tr>
+                        <td>অর্ডার মূল্য</td>
+                        <td id="originalPriceCell">$0.00</td>
+                    </tr>
+                    <tr>
+                        <td>কমিশন</td>
+                        <td id="fiverrPercentageCell">$0.00 <sup>0%</sup></td>
+                    </tr>
+                    <tr class="highlight">
+                        <td>মোট টাকা (BDT)</td>
+                        <td id="totalDollarCell">0.00 BDT</td>
+                    </tr>
+                    <tr>
+                        <td>ফ্রিল্যান্সার পেমেন্ট</td>
+                        <td id="freelancerPaymentCell">0.00 BDT</td>
+                    </tr>
+                    <tr class="total-row">
+                        <td>আপনার নিট আয়</td>
+                        <td id="myCalculatedMoneyCell">0.00 BDT</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
     </div>
-</div>
 
-<script>
-    document.getElementById('calculationForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        // Get input values
-        const originalPrice = parseFloat(document.getElementById('original_price').value) || 0;
-        const dollarRate = parseFloat(document.getElementById('doller_rate').value) || 0;
-        const freelancerPayment = parseFloat(document.getElementById('freelancer_payment_price').value) || 0;
-        
-        // Calculate values
-        const fiverrTake = originalPrice * 0.2;
-        const iWillGet = originalPrice - fiverrTake;
-        const convertedTk = iWillGet * dollarRate;
-        const myCalculatedMoney = convertedTk - freelancerPayment;
-        
-        // Format numbers with commas
-        const formatNumber = num => num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        
-        // Update the table cells
-        document.getElementById('originalPriceCell').textContent = `$${originalPrice}`;
-        document.getElementById('fiverrPercentageCell').innerHTML = `($${fiverrTake.toFixed(2)}) <sup>20%</sup>`;
-        document.getElementById('totalDollarCell').innerHTML = `(<b>$${iWillGet.toFixed(2)}</b> x ${dollarRate} TK) = <b>${formatNumber(convertedTk.toFixed(2))}</b> TK`;
-        document.getElementById('freelancerPaymentCell').textContent = `${formatNumber(freelancerPayment)} TK`;
-        document.getElementById('myCalculatedMoneyCell').textContent = `${formatNumber(myCalculatedMoney.toFixed(2))} TK`;
-        
-        // Show the result container
-        document.getElementById('resultContainer').classList.remove('hidden');
-    });
-</script>
+    <script>
+        document.getElementById('calculationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get input values
+            const originalPrice = parseFloat(document.getElementById('original_price').value) || 0;
+            const dollarRate = parseFloat(document.getElementById('doller_rate').value) || 0;
+            const freelancerPayment = parseFloat(document.getElementById('freelancer_payment_price').value) || 0;
+            const fiverrPercentage = parseFloat(document.getElementById('fiverr_percentage').value) || 0;
+            
+            // Calculate values
+            const fiverrTake = originalPrice * (fiverrPercentage / 100);
+            const iWillGet = originalPrice - fiverrTake;
+            const convertedTk = iWillGet * dollarRate;
+            const myCalculatedMoney = convertedTk - freelancerPayment;
+            
+            // Format numbers with commas
+            const formatNumber = num => {
+                if (num === 0) return "0.00";
+                return num.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            };
+            
+            // Update the table cells
+            document.getElementById('originalPriceCell').textContent = `$${formatNumber(originalPrice)}`;
+            document.getElementById('fiverrPercentageCell').innerHTML = `$${formatNumber(fiverrTake)} <sup>${fiverrPercentage}%</sup>`;
+            document.getElementById('totalDollarCell').textContent = `${formatNumber(convertedTk)} BDT`;
+            document.getElementById('freelancerPaymentCell').textContent = `${formatNumber(freelancerPayment)} BDT`;
+            document.getElementById('myCalculatedMoneyCell').textContent = `${formatNumber(myCalculatedMoney)} BDT`;
+            
+            // Show the result container
+            document.getElementById('resultContainer').classList.remove('hidden');
+        });
+    </script>
 </body>
 </html>
