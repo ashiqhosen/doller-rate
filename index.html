@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fiverr Income Calculation</title>
+    <style>
+        body{
+            background: #f8efff;
+            font-family: poppins, sans-serif;
+        }
+        form {
+            display: block;
+            width: 400px;
+            background: #fff;
+            padding: 20px;
+            border: 1px solid #999;
+            border-radius: 10px;
+            box-shadow: 0px 10px 10px #99999959;
+            
+        }
+        .result{
+            
+            display: block;
+            width: 600px;
+            background: #fff;
+            padding: 40px;
+            border: 1px solid #999;
+            border-radius: 10px;
+            box-shadow: 0px 10px 10px #99999959;
+        }
+        label {
+            display: block;
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 5px !important;
+            margin-top: 10px;
+        }
+        input[type="number"] {
+            display: block;
+            padding: 5px;
+            width: 97%;
+            background: #fff;
+            outline: none !important;
+            border: 1px solid #999;
+            border-radius: 5px;
+            color: #000;
+            font-size: 20px;
+            line-height: 1.3em;
+        }
+        input[type="submit"] {
+            background: #f8efff;
+            color: #000;
+            outline: none;
+            margin: 10px 0px;
+            padding: 10px 30px;
+            border: 1px solid #999;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            width: 100%;
+        }
+        input[type="submit"]:hover {
+            background: #e0c0f8ff;
+            color: #000;
+            border: 1px dashed #999;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+            
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+        .wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            gap: 20px;
+            width: 100% !important;
+            margin: 40px auto;
+            
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div class="wrapper">
+    <form id="calculationForm">
+        <label for="total_amount">Original Order Price (USD)</label>
+        <input type="number" name="original_price" id="original_price">
+        <label for="dollar_rate">Current USD rate (TK)</label>
+        <input type="number" name="doller_rate" id="doller_rate" value="123">
+
+        <label for="freelancer_budget">Freelancer Payment</label>
+        <input type="number" name="freelancer_payment_price" id="freelancer_payment_price">
+        <input type="submit" value="Calculate">
+    </form>
+    
+    <div class="result hidden" id="resultContainer">
+        <table>
+            <thead>
+                <th>Name</th>
+                <th>Count</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        Original Price
+                    </td>
+                    <td id="originalPriceCell">
+                        $0
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>
+                        Fiverr Percentage
+                    </td>
+                    <td id="fiverrPercentageCell">
+                        ($0) <sup>20%</sup>
+                    </td>
+                </tr>
+                
+                <tr style="background:#00ffa4 !important;">
+                    <td style="font-weight:600;">
+                        Total Doller
+                    </td>
+                    <td id="totalDollarCell">
+                        ($0 x 0 TK) = 0 TK
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>
+                        Freelancer Payment
+                    </td>
+                    <td id="freelancerPaymentCell">
+                        0 TK
+                    </td>
+                </tr>
+
+                <tr style="background:#00ffa4 !important; font-weight:600">
+                    <td>
+                        My Calculated Money
+                    </td>
+                    <td id="myCalculatedMoneyCell">
+                        0 TK
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    document.getElementById('calculationForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Get input values
+        const originalPrice = parseFloat(document.getElementById('original_price').value) || 0;
+        const dollarRate = parseFloat(document.getElementById('doller_rate').value) || 0;
+        const freelancerPayment = parseFloat(document.getElementById('freelancer_payment_price').value) || 0;
+        
+        // Calculate values
+        const fiverrTake = originalPrice * 0.2;
+        const iWillGet = originalPrice - fiverrTake;
+        const convertedTk = iWillGet * dollarRate;
+        const myCalculatedMoney = convertedTk - freelancerPayment;
+        
+        // Format numbers with commas
+        const formatNumber = num => num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        
+        // Update the table cells
+        document.getElementById('originalPriceCell').textContent = `$${originalPrice}`;
+        document.getElementById('fiverrPercentageCell').innerHTML = `($${fiverrTake.toFixed(2)}) <sup>20%</sup>`;
+        document.getElementById('totalDollarCell').innerHTML = `(<b>$${iWillGet.toFixed(2)}</b> x ${dollarRate} TK) = <b>${formatNumber(convertedTk.toFixed(2))}</b> TK`;
+        document.getElementById('freelancerPaymentCell').textContent = `${formatNumber(freelancerPayment)} TK`;
+        document.getElementById('myCalculatedMoneyCell').textContent = `${formatNumber(myCalculatedMoney.toFixed(2))} TK`;
+        
+        // Show the result container
+        document.getElementById('resultContainer').classList.remove('hidden');
+    });
+</script>
+</body>
+</html>
